@@ -18,9 +18,24 @@ router.get('/', function(req, res) {
     order = shuffle(order);
 
   res.render('index', { title: 'Entirely Fair Random Room Assignment',
-                        room1: order[0],
-                        room2: order[1],
-                        room3: order[2]});
+                        room1: "",
+                        room2: "",
+                        room3: ""});
 });
+
+//Randomise for ajax call
+router.get('/random', function(req, res) {
+    // 'Randomly' shuffle name order
+    console.log("random");
+    var order = shuffle(names);
+    while (order[2] === 'Calum')
+        order = shuffle(order);
+
+    res.write(
+        JSON.stringify({name1: order[0], name2: order[1], name3: order[2]}));
+
+    res.end();
+});
+
 
 module.exports = router;

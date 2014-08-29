@@ -1,14 +1,34 @@
 extends layout
 
 block content
+  script(type='text/javascript').
+    function randomise()
+    {
+      $.ajax({
+          type: "GET",
+          url: "/random",
+          success: function(data) {
+              var jsonObj = $.parseJSON(data);
+              $("#r1").html(jsonObj.name1);
+              $("#r2").html(jsonObj.name2);
+              $("#r3").html(jsonObj.name3);
+          }
+      });
+    }
+
   h1 #{title}
-  table.table
+  button(class='btn btn-lg btn-primary btn-block', onclick='randomise()') Randomise
+  br
+  table.table.table-striped
       tr
-        td Bedroom 1
-        td #{room1}
+        td
+          b Bedroom 1
+        td#r1 #{room1}
       tr
-        td Bedroom 2
-        td #{room2}
+        td
+          b Bedroom 2
+        td#r2 #{room2}
       tr
-        td Bedroom 3
-        td #{room3}
+        td
+          b Bedroom 3
+        td#r3 #{room3}
