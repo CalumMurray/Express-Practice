@@ -1,0 +1,38 @@
+extends layout
+
+block content
+
+  script(type='text/javascript').
+      $(document).ready(function(){
+        $("button#animate-button").click(function(){
+          $("div#block").slideToggle(1000, function() {
+            var area = $("p#complete");
+            area.html("Animation Complete");
+            area.css("color", "rgb(0, 255, 0)");
+          });
+        });
+      });
+
+  script(type='text/javascript').
+    var i = 0;
+    function doAjax() {
+        console.log("in ajax func" + i);
+        $.ajax({
+        type: "GET",
+        url: "/ajax",
+        success: function(data) {
+            var jsonObj = $.parseJSON(data);
+            $("p").html(jsonObj.id + ' ' + jsonObj.user);
+            $("h1").html(i++);
+            }
+        });
+    }
+
+  div.container
+    h1= title
+    p Welcome to #{title}
+    p id = #{id}
+    p user = #{user}
+    p#complete
+    button(class='btn btn-lg btn-primary btn-block', id='animate-button', type='submit') Animate!
+    div#block(style="background:#98bf21;height:100px;width:100px;position:absolute;")
